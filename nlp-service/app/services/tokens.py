@@ -14,6 +14,7 @@ def extract_tokens(doc):
         if token.pos_ not in ALLOWED_POS:
             continue
         tokens.append({
+            "type": "TOKEN",
             "text": token.text,
             "lemma": token.lemma_,
             "pos": token.pos_,
