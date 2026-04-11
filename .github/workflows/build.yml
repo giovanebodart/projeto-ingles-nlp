@@ -27,5 +27,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/seu-usuario/projeto-ingles-nlp:latest
-            ghcr.io/seu-usuario/projeto-ingles-nlp:${{ github.sha }}
+            ghcr.io/giovanebodart/projeto-ingles-nlp:latest
+            ghcr.io/giovanebodart/projeto-ingles-nlp:${{ github.sha }}
