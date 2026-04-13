@@ -12,6 +12,8 @@ FROM python:3.13-slim
 
 WORKDIR /app
 
+ENV PYTHONPATH=/app
+
 # Usuário não-root
 RUN addgroup --system nlp && adduser --system --ingroup nlp nlp
 
@@ -19,7 +21,7 @@ RUN addgroup --system nlp && adduser --system --ingroup nlp nlp
 COPY --from=builder /install/deps /usr/local
 
 # Copia o código da aplicação
-COPY ./app /app
+COPY . .
 
 # Baixa o modelo spaCy em build time — evita download em runtime
 RUN python -m spacy download en_core_web_sm
