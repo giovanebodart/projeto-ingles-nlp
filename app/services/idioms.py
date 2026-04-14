@@ -1,6 +1,6 @@
 import spacy
 from spacy.matcher import Matcher
-from app.data.idioms_data import patterns
+from data.idioms_data import patterns
 
 nlp = spacy.load("en_core_web_sm")
 
