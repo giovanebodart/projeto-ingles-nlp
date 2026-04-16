@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from services.pipeline import analyze_text
+from app.services.pipeline import analyze_text
 
 app = FastAPI()
 
