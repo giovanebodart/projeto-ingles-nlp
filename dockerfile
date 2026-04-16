@@ -31,7 +31,7 @@ USER nlp
 EXPOSE 8000
 
 # Workers = (2 x CPU) + 1  — ajuste conforme o host
-CMD ["uvicorn", "main:app", \
+CMD ["uvicorn", "app.main:app", \
      "--host", "0.0.0.0", \
      "--port", "8000", \
      "--workers", "1" ]
