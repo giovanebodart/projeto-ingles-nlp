@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from app.models.request import AnalyzeRequest
 from app.services.pipeline import analyze_text
 
 app = FastAPI()
@@ -8,7 +9,8 @@ def health():
     return {"status": "ok"}
 
 @app.post("/analyze")
-def analyze(payload: dict): 
-    texts = payload.get("texts", [])
-    return analyze_text(texts)
-    
+def analyze(request: AnalyzeRequest):
+    try:
+        return analyze_text(request.texts, request.language)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))    

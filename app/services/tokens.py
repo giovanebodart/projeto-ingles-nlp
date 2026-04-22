@@ -1,25 +1,14 @@
-ALLOWED_POS = {
-    "VERB",
-    "NOUN",
-    "ADJ",
-    "ADV",
-    "PART",
-    "ADP"
-}
-
-def extract_tokens(doc):
+def extract_tokens(doc, allowed_pos: set[str]) -> list[dict]:
     tokens = []
-
     for token in doc:
-        if token.pos_ not in ALLOWED_POS:
+        if token.pos_ not in allowed_pos:
             continue
         tokens.append({
-            "type": "TOKEN",
-            "text": token.text,
+            "type":  "TOKEN",
+            "text":  token.text,
             "lemma": token.lemma_,
-            "pos": token.pos_,
+            "pos":   token.pos_,
             "start": token.idx,
-            "end": token.idx + len(token.text)
+            "end":   token.idx + len(token.text)
         })
-
     return tokens
