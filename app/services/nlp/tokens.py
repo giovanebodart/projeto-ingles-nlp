@@ -1,3 +1,4 @@
+
 def extract_tokens(doc, allowed_pos: set[str]) -> list[dict]:
     tokens = []
     for token in doc:

@@ -1,5 +1,5 @@
-from app.services.registry import resolve
-from app.services.tokens import extract_tokens
+from app.services.nlp.registry import resolve
+from app.services.nlp.tokens import extract_tokens
 
 def analyze_text(texts: list[str], language: str) -> dict:
     analyzer, nlp = resolve(language)
