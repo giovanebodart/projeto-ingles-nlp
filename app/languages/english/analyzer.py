@@ -2,11 +2,6 @@ import spacy
 from app.languages.base import LanguageAnalyzer
 from .phrasal import extract_phrasal_verbs
 
-_TYPE_MAP = {
-    "PHRASAL_VERB": "MULTI_WORD_EXPRESSION",
-    "IDIOM":        "COLLOCATION",
-    "TOKEN":        "TOKEN"
-}
 class EnglishAnalyzer(LanguageAnalyzer):
 
     def get_language_code(self) -> str:
@@ -22,6 +17,6 @@ class EnglishAnalyzer(LanguageAnalyzer):
         results = []
 
         for pv in extract_phrasal_verbs(doc):
-            results.append({**pv, "type": _TYPE_MAP["PHRASAL_VERB"]})
+            results.append({**pv, "type": "PHRASAL_VERB"})
         
         return results

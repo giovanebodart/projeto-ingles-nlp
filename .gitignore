@@ -1,8 +1,16 @@
 .venv
 app/__pycache__/
+app/services/__pycache__/
+app/data/__pycache__/
+app/__pycache__/
 app/models/__pycache__/
 app/services/__pycache__/
 app/data/__pycache__/
 app/languages/__pycache__/
 app/languages/english/__pycache__/
 app/languages/spanish/__pycache__/
+app/services/transcribe/__pycache__/
+app/models/transcribe/__pycache__/
+app/models/__pycache__/
+app/services/nlp/__pycache__/
+logs/

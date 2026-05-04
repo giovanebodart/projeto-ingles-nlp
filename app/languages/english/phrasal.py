@@ -11,8 +11,6 @@ def extract_phrasal_verbs(doc) -> list[dict]:
                 results.append({
                     "text":   span.text,
                     "lemma":  f"{token.lemma_} {child.lemma_}",
-                    "start":  span.start_char,
-                    "end":    span.end_char,
                     "tokens": [t.i for t in span]
                 })
     return results

@@ -1,8 +1,6 @@
 from fastapi import FastAPI, HTTPException
-from app.models.analyze.request import AnalyzeRequest
 from app.models.transcribe.request import TranscribeRequest
-from app.services.nlp.pipeline import analyze_text
-from app.services.transcribe.pipeline import execute
+from app.services.pipeline import execute
 
 app = FastAPI()
 
@@ -10,16 +8,14 @@ app = FastAPI()
 def health():
     return {"status": "ok"}
 
-@app.post("/analyze")
-def analyze(request: AnalyzeRequest):
-    try:
-        return analyze_text(request.language)
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))    
-    
-@app.post
+
+@app.post("/transcribe")
 def transcribe(request: TranscribeRequest):
     try:
-        return execute(request.audio_url)
+        return execute(str(request.url), str(request.language))
+    except FileNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
+    except RuntimeError as e:
+        raise HTTPException(status_code=500, detail=str(e))

@@ -15,9 +15,8 @@ def analyze_text(texts: list[str], language: str) -> dict:
 
         results.append({
             "text":        text,
-            "language":    analyzer.get_language_code(),
             "tokens":      tokens,
             "expressions": expressions
         })
 
-    return {"results": results}
+    return {"language": analyzer.get_language_code(), "results": results}

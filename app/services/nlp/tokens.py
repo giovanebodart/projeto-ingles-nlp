@@ -8,8 +8,6 @@ def extract_tokens(doc, allowed_pos: set[str]) -> list[dict]:
             "type":  "TOKEN",
             "text":  token.text,
             "lemma": token.lemma_,
-            "pos":   token.pos_,
-            "start": token.idx,
-            "end":   token.idx + len(token.text)
+            "pos":   token.pos_
         })
     return tokens
