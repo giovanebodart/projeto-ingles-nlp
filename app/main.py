@@ -12,7 +12,9 @@ def health():
 @app.post("/transcribe")
 def transcribe(request: TranscribeRequest):
     try:
-        return execute(str(request.url), str(request.language))
+        print("URL RECEBIDA:", request.url)
+        print("TIPO:", type(request.url))
+        return execute(request.url, request.language)
     except FileNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
     except ValueError as e:

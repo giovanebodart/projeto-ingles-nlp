@@ -8,8 +8,8 @@ def analyze_text(texts: list[str], language: str) -> dict:
     docs = list(nlp.pipe(texts))
 
     for text, doc in zip(texts, docs):
-        tokens      = extract_tokens(doc, analyzer.get_allowed_pos())
-        expressions = analyzer.extract_multi_word_expressions(doc)
+        tokens      = extract_tokens(doc, analyzer.get_allowed_pos(), language)
+        expressions = analyzer.extract_multi_word_expressions(doc, language)
 
         expressions.sort(key=lambda x: x.get("start") or 0)
 

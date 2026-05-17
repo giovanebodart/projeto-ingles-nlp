@@ -21,3 +21,7 @@ class LanguageAnalyzer(ABC):
     @abstractmethod
     def get_allowed_pos(self) -> set[str]:
         """POS tags relevantes para este idioma (usando Universal POS do spaCy)"""
+        
+    @abstractmethod
+    def expression_frequency(self, expression, language) -> str:
+        """"""

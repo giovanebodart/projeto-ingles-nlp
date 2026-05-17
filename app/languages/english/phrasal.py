@@ -9,7 +9,7 @@ def extract_phrasal_verbs(doc) -> list[dict]:
                 end   = max(token.i, child.i) + 1
                 span  = doc[start:end]
                 results.append({
-                    "text":   span.text,
+                    "originalText":   span.text,
                     "lemma":  f"{token.lemma_} {child.lemma_}",
                     "tokens": [t.i for t in span]
                 })

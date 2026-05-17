@@ -10,7 +10,6 @@ def download_video(url: str, job_id: str) -> str:
 
     ydl_opts = {
         "outtmpl": output_template,
-        # Baixa apenas o melhor áudio disponível — vídeo não é necessário para transcrição
         "format": "bestaudio/best",
     }
 
