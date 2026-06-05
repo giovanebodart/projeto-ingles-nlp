@@ -13,4 +13,5 @@ app/services/transcribe/__pycache__/
 app/models/transcribe/__pycache__/
 app/models/__pycache__/
 app/services/nlp/__pycache__/
+app/services/nlp/
 logs/

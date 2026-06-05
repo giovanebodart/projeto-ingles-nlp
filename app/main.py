@@ -1,13 +1,12 @@
 from fastapi import FastAPI, HTTPException
 from app.models.transcribe.request import TranscribeRequest
-from app.services.pipeline import execute
+from app.services.nlp.pipeline import execute
 
 app = FastAPI()
 
 @app.get("/health")
 def health():
     return {"status": "ok"}
-
 
 @app.post("/transcribe")
 def transcribe(request: TranscribeRequest):

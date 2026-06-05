@@ -1,22 +1,56 @@
-from app.services.nlp.registry import resolve
-from app.services.nlp.tokens import extract_tokens
+import os
+import uuid
+from app.services.nlp.downloader import download_video
+from app.services.nlp.transformer import convert_to_wav
+from app.services.nlp.transcriber import transcribe_audio
+from app.services.nlp.analyze import analyze_text
 
-def analyze_text(texts: list[str], language: str) -> dict:
-    analyzer, nlp = resolve(language)
+STORAGE_DIR = "app/temp"
+os.makedirs(STORAGE_DIR, exist_ok=True)
 
-    results = []
-    docs = list(nlp.pipe(texts))
 
-    for text, doc in zip(texts, docs):
-        tokens      = extract_tokens(doc, analyzer.get_allowed_pos(), language)
-        expressions = analyzer.extract_multi_word_expressions(doc, language)
+def execute(url: str, language: str) -> dict:
+    job_id = str(uuid.uuid4())
 
-        expressions.sort(key=lambda x: x.get("start") or 0)
+    video_path = None
+    wav_path = None
+    txt_path = None
 
-        results.append({
-            "text":        text,
-            "tokens":      tokens,
-            "expressions": expressions
-        })
+    try:
+        # 1. Download
+        video_path = download_video(url, job_id)
 
-    return {"language": analyzer.get_language_code(), "results": results}
+        # 2. Converte para .wav e deleta o vídeo original
+        wav_path = convert_to_wav(video_path, job_id)
+        _delete_file(video_path)
+        video_path = None
+
+        # 3. Transcreve para .txt e deleta o .wav
+        txt_path = transcribe_audio(wav_path, job_id)
+        _delete_file(wav_path)
+        wav_path = None
+        
+        texts = _read_txt(txt_path)
+        _delete_file(txt_path)
+        txt_path = None
+
+        # 4. Analisa o .txt com o pipeline de NLP e retorna o response estruturado
+        return analyze_text(url, texts, language)
+
+    except Exception:
+        _delete_file(video_path)
+        _delete_file(wav_path)
+        _delete_file(txt_path)
+        raise
+
+def _read_txt(txt_path: str) -> list[str]:
+    with open(txt_path, "r", encoding="utf-8") as f:
+        lines = [line.strip() for line in f.readlines()]
+    return [line for line in lines if line]
+
+def _delete_file(path: str) -> None:
+    try:
+        if path and os.path.exists(path):
+            os.remove(path)
+    except OSError:
+        pass
